@@ -13,6 +13,8 @@ public:
 
 	void Affichage();
 
+	void RandomTile();
+
 	int Position(int x, int y);
 
 };

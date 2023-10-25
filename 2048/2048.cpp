@@ -10,5 +10,11 @@ int main()
 {
     Grid* oGrid = new Grid();
     oGrid->Affichage();
+    oGrid->RandomTile();
+    oGrid->Affichage();
+    oGrid->RandomTile();
+    oGrid->Affichage();
+    oGrid->RandomTile();
+    oGrid->Affichage();
     delete oGrid;
 }

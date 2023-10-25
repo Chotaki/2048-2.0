@@ -8,4 +8,6 @@ public:
 
     int GetValues();
 
+    void ChangeValue(int i);
+
 };

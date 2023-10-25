@@ -42,3 +42,20 @@ int Grid::Position(int x, int y) {
     return (x * 4 + y);
 
 }
+
+void Grid::RandomTile() {
+    for (int i = 0; i < 2; i++) {
+        int position = (rand() % 15);
+        int chance = (rand() % 5);
+        if (grid[position].GetValues() == 0) {
+            if (chance == 0) {
+                grid[position].ChangeValue(4);
+            }
+            else 
+            {
+                grid[position].ChangeValue(2);
+            }
+        }
+    }
+    
+}
