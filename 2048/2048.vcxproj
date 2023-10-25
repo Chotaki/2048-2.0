@@ -18,6 +18,15 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Case.h" />
+    <ClInclude Include="Grid.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="2048.cpp" />
+    <ClCompile Include="Case.cpp" />
+    <ClCompile Include="Grid.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -126,15 +135,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\Chotaki\2048\2048\2048.cpp" />
-    <ClCompile Include="..\..\Chotaki\2048\2048\Case.cpp" />
-    <ClCompile Include="..\..\Chotaki\2048\2048\Grid.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\Chotaki\2048\2048\Case.h" />
-    <ClInclude Include="..\..\Chotaki\2048\2048\Grid.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
