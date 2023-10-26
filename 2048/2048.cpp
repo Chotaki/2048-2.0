@@ -14,7 +14,7 @@ using namespace std;
 
 int main()
 {
-    bool badKey = true;
+    /*bool badKey = true;
     while (badKey)
     {
         badKey = false;
@@ -33,7 +33,7 @@ int main()
             badKey = true;
             break;
         }
-    }
+    }*/
 
     bool game = true;
     string x;

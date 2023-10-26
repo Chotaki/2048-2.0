@@ -18,17 +18,17 @@ void Grid::Affichage() {
     {
         for (int j = 0; j < iGridSize / 4; j++)
         {
-            if (grid[Position(i,j)].GetValues() < 10) {
-                cout << "|" << " " << " " << grid[Position(i, j)].GetValues() << " " << " " << "|";
+            if (grid[Position(i,j)].GetValue() < 10) {
+                cout << "|" << " " << " " << grid[Position(i, j)].GetValue() << " " << " " << "|";
             }
-            else if (grid[Position(i, j)].GetValues() >= 10 and grid[Position(i, j)].GetValues() < 100) {
-                cout << "|" << " " << " " << grid[Position(i, j)].GetValues() << " " << "|";
+            else if (grid[Position(i, j)].GetValue() >= 10 and grid[Position(i, j)].GetValue() < 100) {
+                cout << "|" << " " << " " << grid[Position(i, j)].GetValue() << " " << "|";
             }
-            else if (grid[Position(i, j)].GetValues() >= 100 and grid[Position(i, j)].GetValues() < 1000) {
-                cout << "|" << " " << grid[Position(i, j)].GetValues() << " " << "|";
+            else if (grid[Position(i, j)].GetValue() >= 100 and grid[Position(i, j)].GetValue() < 1000) {
+                cout << "|" << " " << grid[Position(i, j)].GetValue() << " " << "|";
             }
-            else if (grid[Position(i, j)].GetValues() >= 1000) {
-                cout << "|" << " " << grid[Position(i, j)].GetValues() << "|";
+            else if (grid[Position(i, j)].GetValue() >= 1000) {
+                cout << "|" << " " << grid[Position(i, j)].GetValue() << "|";
             }
 
         }
@@ -53,7 +53,7 @@ void Grid::RandomTile() {
     for (int i = 0; i < 2; i++) {
         int position = distribution(gen);
         int chance = distrib4(gen);
-        if (grid[position].GetValues() == 0) {
+        if (grid[position].GetValue() == 0) {
             if (chance == 0) {
                 grid[position].ChangeValue(4);
             }
@@ -78,7 +78,7 @@ void Grid::Tileplay(string x)
             {
 
                 pos = (Position(i, j));
-                temp = grid[pos].GetValues();
+                temp = grid[pos].GetValue();
 
                 // glisement droite
                 if (x == "droite")
@@ -90,7 +90,7 @@ void Grid::Tileplay(string x)
                             cout << "out of range" << endl;
                         }
                         else {
-                            if (temp == grid[pos - 1].GetValues())
+                            if (temp == grid[pos - 1].GetValue())
                             {
 
                                 if (pos - 1 >= 0) {
@@ -111,9 +111,9 @@ void Grid::Tileplay(string x)
                         else
                         {
                             if (pos - 1 >= 0) {
-                                if (grid[pos - 1].GetValues() != 0)
+                                if (grid[pos - 1].GetValue() != 0)
                                 {
-                                    grid[pos].ChangeValue(grid[pos - 1].GetValues());
+                                    grid[pos].ChangeValue(grid[pos - 1].GetValue());
                                     grid[pos - 1].ChangeValue(0);
                                 }
                             }
@@ -130,7 +130,7 @@ void Grid::Tileplay(string x)
                             cout << "out of range" << endl;
                         }
                         else {
-                            if (temp == grid[pos - 4].GetValues())
+                            if (temp == grid[pos - 4].GetValue())
                             {
 
                                 if (pos + 4 >= 0) {
@@ -151,9 +151,9 @@ void Grid::Tileplay(string x)
                         else
                         {
                             if (pos - 4 >= 0) {
-                                if (grid[pos - 4].GetValues() != 0)
+                                if (grid[pos - 4].GetValue() != 0)
                                 {
-                                    grid[pos].ChangeValue(grid[pos - 4].GetValues());
+                                    grid[pos].ChangeValue(grid[pos - 4].GetValue());
                                     grid[pos - 4].ChangeValue(0);
                                 }
                             }
@@ -171,7 +171,7 @@ void Grid::Tileplay(string x)
             for(int l = 3; l>=0 ; l--)
             {
                 pos = (Position(k, l));
-                temp = grid[pos].GetValues();
+                temp = grid[pos].GetValue();
                 //glissement gauche
                 if (x == "gauche")
                 {
@@ -183,7 +183,7 @@ void Grid::Tileplay(string x)
                         }
                         else
                         {
-                            if (temp == grid[pos + 1].GetValues())
+                            if (temp == grid[pos + 1].GetValue())
                             {
                                 if (pos + 1 <= 15)
                                 {
@@ -203,9 +203,9 @@ void Grid::Tileplay(string x)
                         else
                         {
                             if (pos + 1 <= 15) {
-                                if (grid[pos + 1].GetValues() != 0)
+                                if (grid[pos + 1].GetValue() != 0)
                                 {
-                                    grid[pos].ChangeValue(grid[pos + 1].GetValues());
+                                    grid[pos].ChangeValue(grid[pos + 1].GetValue());
                                     grid[pos + 1].ChangeValue(0);
                                 }
                             }
@@ -222,7 +222,7 @@ void Grid::Tileplay(string x)
                         }
                         else
                         {
-                            if (temp == grid[pos + 4].GetValues())
+                            if (temp == grid[pos + 4].GetValue())
                             {
                                 if (pos + 4 <= 15)
                                 {
@@ -242,9 +242,9 @@ void Grid::Tileplay(string x)
                         else
                         {
                             if (pos + 4 <= 15) {
-                                if (grid[pos + 4].GetValues() != 0)
+                                if (grid[pos + 4].GetValue() != 0)
                                 {
-                                    grid[pos].ChangeValue(grid[pos + 4].GetValues());
+                                    grid[pos].ChangeValue(grid[pos + 4].GetValue());
                                     grid[pos + 4].ChangeValue(0);
                                 }
                             }
@@ -255,4 +255,42 @@ void Grid::Tileplay(string x)
             
         }
     }   
+}
+
+bool Grid::Win() {
+    int val;
+    int pos;
+    for (int i = 0; i < iGridSize / 4; i++)
+    {
+        for (int j = 0; j < iGridSize / 4; j++)
+        {
+            pos = (Position(i, j));
+            val = grid[pos].GetValue();
+            if (val == 2048) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+}
+
+bool Grid::Loose() {
+    int val;
+    int pos;
+    for (int i = 0; i < iGridSize / 4; i++)
+    {
+        for (int j = 0; j < iGridSize / 4; j++)
+        {
+            pos = (Position(i, j));
+            val = grid[pos].GetValue();
+            if (val != 2048 and val != 0) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
 }
