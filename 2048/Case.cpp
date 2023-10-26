@@ -5,7 +5,7 @@ Case::Case()
     valeur = 0;
 }
 
-int Case::GetValues()
+int Case::GetValue()
 {
     return valeur;
 }

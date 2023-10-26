@@ -20,4 +20,8 @@ public:
 
 	int Position(int x, int y);
 
+	bool Win();
+
+	bool Loose();
+
 };

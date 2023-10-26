@@ -6,7 +6,7 @@ public:
 
     Case();
 
-    int GetValues();
+    int GetValue();
 
     void ChangeValue(int i);
 
