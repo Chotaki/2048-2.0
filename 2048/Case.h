@@ -3,6 +3,7 @@
 class Case {
 public:
     int valeur;
+    bool merge;
 
     Case();
 

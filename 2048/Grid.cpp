@@ -66,196 +66,224 @@ void Grid::RandomTile() {
     
 }
 
-void Grid::Tileplay(string x) 
+void Grid::MergeTile(int x, int y) {
+    grid[x].ChangeValue(grid[x].GetValue() * 2);
+    grid[y].ChangeValue(0);
+    grid[x].merge = true;
+}
+
+void Grid::ResetMerge()
+{
+    int pos;
+    for (int i = 0; i < iGridSize / 4; i++)
+    {
+        for (int j = 0; j < iGridSize / 4; j++)
+        {
+            pos = (Position(i, j));
+            grid[pos].merge = false;
+        }
+    }
+}
+
+void Grid::TilePlayRight()
 {
     int temp;
     int pos;
-    if (x == "droite" or x == "bas")
+    for (int i = 0; i < iGridSize / 4; i++)
     {
-        for (int i = 0; i < iGridSize / 4; i++)
+        for (int j = 0; j < iGridSize / 4; j++)
         {
-            for (int j = 0; j < iGridSize / 4; j++)
+
+        pos = (Position(i, j));
+        temp = grid[pos].GetValue();
+
+            if (temp != 0)
             {
-
-                pos = (Position(i, j));
-                temp = grid[pos].GetValue();
-
-                // glisement droite
-                if (x == "droite")
+                if (pos - 1 < i * 4) 
                 {
-                    if (temp != 0)
+                    pos = pos + 1;
+                }
+                else {
+                    if (temp == grid[pos - 1].GetValue())
                     {
-                        if (pos - 1 < i * 4)
-                        {
-                            cout << "out of range" << endl;
-                        }
-                        else {
-                            if (temp == grid[pos - 1].GetValue())
-                            {
 
-                                if (pos - 1 >= 0) {
-                                    grid[pos].ChangeValue(temp * 2);
-                                    grid[pos - 1].ChangeValue(0);
-                                }
-
-                            }
-                        }
-
-                    }
-                    else
-                    {
-                        if (pos - 1 < i * 4)
-                        {
-                            cout << "out of RANGE" << endl;
-                        }
-                        else
-                        {
-                            if (pos - 1 >= 0) {
-                                if (grid[pos - 1].GetValue() != 0)
-                                {
-                                    grid[pos].ChangeValue(grid[pos - 1].GetValue());
-                                    grid[pos - 1].ChangeValue(0);
-                                }
+                        if (pos - 1 >= 0) {
+                            if (grid[pos].merge == false) {
+                                MergeTile(pos, pos - 1);
                             }
                         }
                     }
                 }
-                //glissement bas
-                else if (x == "bas")
+            }
+            else
+            {
+                if (pos - 1 < i * 4)
                 {
-                    if (temp != 0)
-                    {
-                        if (pos - 4 < 0 )
+                    pos = pos + 1;
+                }
+                else
+                {
+                    if (pos - 1 >= 0) {
+                        if (grid[pos - 1].GetValue() != 0)
                         {
-                            cout << "out of range" << endl;
-                        }
-                        else {
-                            if (temp == grid[pos - 4].GetValue())
-                            {
-
-                                if (pos + 4 >= 0) {
-                                    grid[pos].ChangeValue(temp * 2);
-                                    grid[pos - 4].ChangeValue(0);
-                                }
-
-                            }
-                        }
-
-                    }
-                    else
-                    {
-                        if (pos - 4 < 0)
-                        {
-                            cout << "out of RANGE" << endl;
-                        }
-                        else
-                        {
-                            if (pos - 4 >= 0) {
-                                if (grid[pos - 4].GetValue() != 0)
-                                {
-                                    grid[pos].ChangeValue(grid[pos - 4].GetValue());
-                                    grid[pos - 4].ChangeValue(0);
-                                }
-                            }
+                            grid[pos].ChangeValue(grid[pos - 1].GetValue());
+                            grid[pos - 1].ChangeValue(0);
                         }
                     }
                 }
             }
         }
     }
-            
-    else if (x == "gauche" or x == "haut")
+}
+void Grid::TilePlayLeft()
+{
+    int temp;
+    int pos;
+    for (int i = 3; i >= 0; i--)
     {
-        for(int k = 3;k >= 0; k--)
+        for (int j = 3; j >= 0; j--)
         {
-            for(int l = 3; l>=0 ; l--)
+            pos = (Position(i, j));
+            temp = grid[pos].GetValue();
+            if (temp != 0)
             {
-                pos = (Position(k, l));
-                temp = grid[pos].GetValue();
-                //glissement gauche
-                if (x == "gauche")
+                if (pos + 1 >= (i+1) * 4)
                 {
-                    if (temp != 0)
-                    {
-                        if (pos + 1 >= (k+1)  * 4)
-                        {
-                            cout << "out of range2" << endl;
-                        }
-                        else
-                        {
-                            if (temp == grid[pos + 1].GetValue())
-                            {
-                                if (pos + 1 <= 15)
-                                {
-                                    grid[pos].ChangeValue(temp * 2);
-                                    grid[pos + 1].ChangeValue(0);
-                                }
-                            }
-                        }
-
-                    }
-                    else
-                    {
-                        if (pos + 1 >= (k+1) * 4)
-                        {
-                            cout << "out of RANGE2" << endl;
-                        }
-                        else
-                        {
-                            if (pos + 1 <= 15) {
-                                if (grid[pos + 1].GetValue() != 0)
-                                {
-                                    grid[pos].ChangeValue(grid[pos + 1].GetValue());
-                                    grid[pos + 1].ChangeValue(0);
-                                }
-                            }
-                        }
-                    }
+                    pos = pos - 1;
                 }
-                else if (x == "haut")
-                {
-                    if (temp != 0)
+                else {
+                    if (temp == grid[pos + 1].GetValue())
                     {
-                        if (pos + 4 >15)
-                        {
-                            cout << "out of range2" << endl;
-                        }
-                        else
-                        {
-                            if (temp == grid[pos + 4].GetValue())
-                            {
-                                if (pos + 4 <= 15)
-                                {
-                                    grid[pos].ChangeValue(temp * 2);
-                                    grid[pos + 4].ChangeValue(0);
-                                }
-                            }
-                        }
-
-                    }
-                    else
-                    {
-                        if (pos + 4 > 15)
-                        {
-                            cout << "out of RANGE2" << endl;
-                        }
-                        else
-                        {
-                            if (pos + 4 <= 15) {
-                                if (grid[pos + 4].GetValue() != 0)
-                                {
-                                    grid[pos].ChangeValue(grid[pos + 4].GetValue());
-                                    grid[pos + 4].ChangeValue(0);
-                                }
+                        if (pos + 1 <= 15) {
+                            if (grid[pos].merge == false) {
+                                MergeTile(pos, pos + 1);
                             }
                         }
                     }
                 }
             }
-            
+            else
+            {
+                if (pos + 1 >= (i + 1) * 4)
+                {
+                    pos = pos - 1;
+                }
+                else
+                {
+                    if (pos + 1 <= 15) {
+                        if (grid[pos + 1].GetValue() != 0)
+                        {
+                            grid[pos].ChangeValue(grid[pos + 1].GetValue());
+                            grid[pos + 1].ChangeValue(0);
+                        }
+                    }
+                }
+            }
         }
-    }   
+    }
 }
+
+void Grid::TilePlayUp()
+{
+    int temp;
+    int pos;
+    for (int i = 3; i >= 0; i--)
+    {
+        for (int j = 3; j >= 0; j--)
+        {
+            pos = (Position(i, j));
+            temp = grid[pos].GetValue();
+            if (temp != 0)
+            {
+                if (pos + 4 > 15)
+                {
+                    pos = pos - 1;
+                }
+                else {
+                    if (temp == grid[pos + 4].GetValue())
+                    {
+                        if (pos + 4 <= 15) {
+                            if (grid[pos].merge == false) {
+                                MergeTile(pos, pos + 4);
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (pos + 4 > 15)
+                {
+                    pos = pos - 1;
+                }
+                else
+                {
+                    if (pos + 4 <= 15) {
+                        if (grid[pos + 4].GetValue() != 0)
+                        {
+                            grid[pos].ChangeValue(grid[pos + 4].GetValue());
+                            grid[pos + 4].ChangeValue(0);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void Grid::TilePlayDown() 
+{
+    int temp;
+    int pos;
+    for (int i = 0; i < iGridSize / 4; i++)
+    {
+        for (int j = 0; j < iGridSize / 4; j++)
+        {
+            pos = (Position(i, j));
+            temp = grid[pos].GetValue();
+
+            if (temp != 0)
+            {
+                if (pos - 4 < 0)
+                {
+                    pos = pos + 1;
+                }
+                else {
+                    if (temp == grid[pos - 4].GetValue())
+                    {
+                        if (pos - 4 >= 0) {
+                            if (grid[pos].merge == false) {
+                                MergeTile(pos, pos - 4);
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (pos - 4 < 0)
+                {
+                    pos = pos + 1;
+                }
+                else
+                {
+                    if (pos - 4 >= 0) {
+                        if (grid[pos - 4].GetValue() != 0)
+                        {
+                            grid[pos].ChangeValue(grid[pos - 4].GetValue());
+                            grid[pos - 4].ChangeValue(0);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+                
 
 bool Grid::Win() {
     int val;

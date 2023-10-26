@@ -14,46 +14,43 @@ using namespace std;
 
 int main()
 {
-    /*bool badKey = true;
-    while (badKey)
-    {
-        badKey = false;
-        int c = 0;
-        switch ((c = _getch()))
-        {
-        case KEY_UP:
-            break;
-        case KEY_DOWN:
-            break;
-        case KEY_RIGHT:
-            break;
-        case KEY_LEFT:
-            break;
-        default:
-            badKey = true;
-            break;
-        }
-    }*/
-
     bool game = true;
     string x;
     Grid* oGrid = new Grid();
     while (game = true)
     {
         oGrid->RandomTile();
+        oGrid->ResetMerge();
         oGrid->Affichage();
-        cout << "direction: droite, gauche, haut, bas" << endl;
-        cin >> x;
-        oGrid->Tileplay(x);
+        cout << endl;
         if (oGrid->Win() == true) {
             game = false;
             cout << "you won !";
             break;
         }
-        else if (oGrid->Loose() == true) {
-            game = false;
-            cout << "you lost !";
-            break;
+        bool badKey = true;
+        while (badKey)
+        {
+            badKey = false;
+            int c = 0;
+            switch ((c = _getch()))
+            {
+            case KEY_UP:
+                oGrid->TilePlayUp();
+                break;
+            case KEY_DOWN:
+                oGrid->TilePlayDown();
+                break;
+            case KEY_RIGHT:
+                oGrid->TilePlayRight();
+                break;
+            case KEY_LEFT:
+                oGrid->TilePlayLeft();
+                break;
+            default:
+                badKey = true;
+                break;
+            }
         }
     }
     
