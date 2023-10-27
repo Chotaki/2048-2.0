@@ -2,7 +2,7 @@
 
 Case::Case()
 {
-    valeur = 1024;
+    valeur = 0;
     merge = false;
 }
 
@@ -10,6 +10,7 @@ int Case::GetValue()
 {
     return valeur;
 }
+
 
 void Case::ChangeValue(int i) {
     valeur = i;

@@ -72,6 +72,12 @@ void Grid::MergeTile(int x, int y) {
     grid[x].merge = true;
 }
 
+void Grid::MoveTile(int x, int y) 
+{
+    grid[x].ChangeValue(grid[y].GetValue());
+    grid[y].ChangeValue(0);
+}
+
 void Grid::ResetMerge()
 {
     int pos;
@@ -126,8 +132,7 @@ void Grid::TilePlayRight()
                     if (pos - 1 >= 0) {
                         if (grid[pos - 1].GetValue() != 0)
                         {
-                            grid[pos].ChangeValue(grid[pos - 1].GetValue());
-                            grid[pos - 1].ChangeValue(0);
+                            MoveTile(pos, pos - 1);
                         }
                     }
                 }
@@ -173,8 +178,7 @@ void Grid::TilePlayLeft()
                     if (pos + 1 <= 15) {
                         if (grid[pos + 1].GetValue() != 0)
                         {
-                            grid[pos].ChangeValue(grid[pos + 1].GetValue());
-                            grid[pos + 1].ChangeValue(0);
+                            MoveTile(pos, pos + 1);
                         }
                     }
                 }
@@ -221,8 +225,7 @@ void Grid::TilePlayUp()
                     if (pos + 4 <= 15) {
                         if (grid[pos + 4].GetValue() != 0)
                         {
-                            grid[pos].ChangeValue(grid[pos + 4].GetValue());
-                            grid[pos + 4].ChangeValue(0);
+                            MoveTile(pos, pos + 4);
                         }
                     }
                 }
@@ -267,13 +270,15 @@ void Grid::TilePlayDown()
                 }
                 else
                 {
+                    
                     if (pos - 4 >= 0) {
                         if (grid[pos - 4].GetValue() != 0)
                         {
-                            grid[pos].ChangeValue(grid[pos - 4].GetValue());
-                            grid[pos - 4].ChangeValue(0);
+                            MoveTile(pos, pos - 4);
                         }
                     }
+                    
+                    
                 }
             }
         }
@@ -297,28 +302,35 @@ bool Grid::Win() {
             if (val == 2048) {
                 return true;
             }
-            else {
-                return false;
-            }
         }
     }
+    return false;
 }
 
 bool Grid::Loose() {
     int val;
     int pos;
+    int compteur = 0;
     for (int i = 0; i < iGridSize / 4; i++)
     {
         for (int j = 0; j < iGridSize / 4; j++)
         {
             pos = (Position(i, j));
             val = grid[pos].GetValue();
-            if (val != 2048 and val != 0) {
-                return true;
-            }
-            else {
+            if (val == 0) {
                 return false;
             }
+            if (val != 2048) {
+                if (pos + 1 <= 15 and pos - 1 > 0 and pos + 4 <= 15 and pos - 4 > 0) {
+                    if (val == grid[pos + 1].GetValue() or val == grid[pos - 1].GetValue() or val == grid[pos + 4].GetValue() or val == grid[pos - 4].GetValue()) {
+                        return false;
+                    }
+                }
+                
+            }
+            
         }
     }
+    return true;
+    
 }

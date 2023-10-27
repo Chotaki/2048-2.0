@@ -22,6 +22,7 @@ public:
 	void TilePlayRight();
 
 	void MergeTile(int x, int y);
+	void MoveTile(int x, int y);
 
 	int Position(int x, int y);
 

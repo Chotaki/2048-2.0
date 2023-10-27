@@ -5,6 +5,7 @@
 #include <conio.h>
 #include "Grid.h"
 #include "Case.h"
+
 using namespace std;
 
 #define KEY_UP 72
@@ -17,6 +18,10 @@ int main()
     bool game = true;
     string x;
     Grid* oGrid = new Grid();
+    //oGrid->grid[0].ChangeValue(2);
+    //oGrid->grid[4].ChangeValue(16);
+    //oGrid->grid[8].ChangeValue(4);
+    //oGrid->grid[12].ChangeValue(8);
     while (game = true)
     {
         oGrid->RandomTile();
@@ -26,6 +31,11 @@ int main()
         if (oGrid->Win() == true) {
             game = false;
             cout << "you won !";
+            break;
+        }
+        if (oGrid->Loose() == true) {
+            game = false;
+            cout << "you lost !";
             break;
         }
         bool badKey = true;
@@ -52,6 +62,7 @@ int main()
                 break;
             }
         }
+        
     }
     
     delete oGrid;
