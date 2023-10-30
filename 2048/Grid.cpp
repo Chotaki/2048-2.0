@@ -38,12 +38,13 @@ void Grid::Affichage() {
     }
 }
 
-int Grid::Position(int x, int y) {
-
+//Nous donne la position dans le tableau 1 dimension avec les coordonnées 2 dimensions
+int Grid::Position(int x, int y) 
+{
     return (x * 4 + y);
-
 }
 
+// Ajoute des 2 et des 4 aléatoirement dans les emplacements vides
 void Grid::RandomTile() {
     random_device rd;
     mt19937 gen(rd());
@@ -69,7 +70,6 @@ void Grid::RandomTile() {
 void Grid::MergeTile(int x, int y) {
     grid[x].ChangeValue(grid[x].GetValue() * 2);
     grid[y].ChangeValue(0);
-    grid[x].merge = true;
 }
 
 void Grid::MoveTile(int x, int y) 
@@ -77,6 +77,7 @@ void Grid::MoveTile(int x, int y)
     grid[x].ChangeValue(grid[y].GetValue());
     grid[y].ChangeValue(0);
 }
+
 
 void Grid::ResetMerge()
 {
@@ -91,6 +92,7 @@ void Grid::ResetMerge()
     }
 }
 
+//déplacement et merge des cases
 void Grid::TilePlayRight()
 {
     int temp;
@@ -116,6 +118,7 @@ void Grid::TilePlayRight()
                         if (pos - 1 >= 0) {
                             if (grid[pos].merge == false) {
                                 MergeTile(pos, pos - 1);
+                                grid[pos].merge = true;
                             }
                         }
                     }
@@ -144,9 +147,9 @@ void Grid::TilePlayLeft()
 {
     int temp;
     int pos;
-    for (int i = 3; i >= 0; i--)
+    for (int i = 0; i < iGridSize / 4; i++)
     {
-        for (int j = 3; j >= 0; j--)
+        for (int j = 0; j < iGridSize / 4; j++)
         {
             pos = (Position(i, j));
             temp = grid[pos].GetValue();
@@ -154,7 +157,7 @@ void Grid::TilePlayLeft()
             {
                 if (pos + 1 >= (i+1) * 4)
                 {
-                    pos = pos - 1;
+                    pos = pos + 1;
                 }
                 else {
                     if (temp == grid[pos + 1].GetValue())
@@ -162,6 +165,7 @@ void Grid::TilePlayLeft()
                         if (pos + 1 <= 15) {
                             if (grid[pos].merge == false) {
                                 MergeTile(pos, pos + 1);
+                                grid[pos].merge = true;
                             }
                         }
                     }
@@ -171,7 +175,7 @@ void Grid::TilePlayLeft()
             {
                 if (pos + 1 >= (i + 1) * 4)
                 {
-                    pos = pos - 1;
+                    pos = pos + 1;
                 }
                 else
                 {
@@ -179,6 +183,7 @@ void Grid::TilePlayLeft()
                         if (grid[pos + 1].GetValue() != 0)
                         {
                             MoveTile(pos, pos + 1);
+                            this->TilePlayLeft();
                         }
                     }
                 }
@@ -191,9 +196,9 @@ void Grid::TilePlayUp()
 {
     int temp;
     int pos;
-    for (int i = 3; i >= 0; i--)
+    for (int i = 0; i < iGridSize / 4; i++)
     {
-        for (int j = 3; j >= 0; j--)
+        for (int j = 0; j < iGridSize / 4; j++)
         {
             pos = (Position(i, j));
             temp = grid[pos].GetValue();
@@ -201,7 +206,7 @@ void Grid::TilePlayUp()
             {
                 if (pos + 4 > 15)
                 {
-                    pos = pos - 1;
+                    pos = pos + 1;
                 }
                 else {
                     if (temp == grid[pos + 4].GetValue())
@@ -209,6 +214,7 @@ void Grid::TilePlayUp()
                         if (pos + 4 <= 15) {
                             if (grid[pos].merge == false) {
                                 MergeTile(pos, pos + 4);
+                                grid[pos].merge = true;
                             }
                         }
                     }
@@ -218,7 +224,7 @@ void Grid::TilePlayUp()
             {
                 if (pos + 4 > 15)
                 {
-                    pos = pos - 1;
+                    pos = pos + 1;
                 }
                 else
                 {
@@ -226,6 +232,7 @@ void Grid::TilePlayUp()
                         if (grid[pos + 4].GetValue() != 0)
                         {
                             MoveTile(pos, pos + 4);
+                            this->TilePlayUp();
                         }
                     }
                 }
@@ -257,6 +264,7 @@ void Grid::TilePlayDown()
                         if (pos - 4 >= 0) {
                             if (grid[pos].merge == false) {
                                 MergeTile(pos, pos - 4);
+                                grid[pos].merge = true;
                             }
                         }
                     }
@@ -287,7 +295,7 @@ void Grid::TilePlayDown()
 
 
 
-
+//Win / Loose conditions
                 
 
 bool Grid::Win() {
@@ -321,8 +329,23 @@ bool Grid::Loose() {
                 return false;
             }
             if (val != 2048) {
-                if (pos + 1 <= 15 and pos - 1 > 0 and pos + 4 <= 15 and pos - 4 > 0) {
-                    if (val == grid[pos + 1].GetValue() or val == grid[pos - 1].GetValue() or val == grid[pos + 4].GetValue() or val == grid[pos - 4].GetValue()) {
+                if (pos + 1 <= 15) {
+                    if (val == grid[pos + 1].GetValue()) {
+                        return false;
+                    }
+                }
+                else if (pos - 1 >= 0) {
+                    if (val == grid[pos - 1].GetValue()) {
+                        return false;
+                    }
+                }
+                else if (pos + 4 <= 15) {
+                    if (val == grid[pos + 4].GetValue()) {
+                        return false;
+                    }
+                }
+                else if (pos - 4 >= 0) {
+                    if (val == grid[pos - 4].GetValue()) {
                         return false;
                     }
                 }

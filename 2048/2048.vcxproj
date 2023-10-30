@@ -21,11 +21,13 @@
   <ItemGroup>
     <ClInclude Include="Case.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="Test.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="2048.cpp" />
     <ClCompile Include="Case.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="Test.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

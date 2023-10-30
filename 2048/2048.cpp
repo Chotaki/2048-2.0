@@ -5,6 +5,7 @@
 #include <conio.h>
 #include "Grid.h"
 #include "Case.h"
+#include "Test.h"
 
 using namespace std;
 
@@ -15,13 +16,10 @@ using namespace std;
 
 int main()
 {
+    //Test(Test1());
     bool game = true;
     string x;
     Grid* oGrid = new Grid();
-    //oGrid->grid[0].ChangeValue(2);
-    //oGrid->grid[4].ChangeValue(16);
-    //oGrid->grid[8].ChangeValue(4);
-    //oGrid->grid[12].ChangeValue(8);
     while (game = true)
     {
         oGrid->RandomTile();
