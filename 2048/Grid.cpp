@@ -136,6 +136,7 @@ void Grid::TilePlayRight()
                         if (grid[pos - 1].GetValue() != 0)
                         {
                             MoveTile(pos, pos - 1);
+                            this->TilePlayRight();
                         }
                     }
                 }
@@ -283,6 +284,7 @@ void Grid::TilePlayDown()
                         if (grid[pos - 4].GetValue() != 0)
                         {
                             MoveTile(pos, pos - 4);
+                            this->TilePlayDown();
                         }
                     }
                     
